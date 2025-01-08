@@ -1321,21 +1321,9 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$componentss$2f$CreateTask$2e
 var __TURBOPACK__imported__module__$5b$project$5d2f$componentss$2f$RemainingTasks$2e$jsx__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/componentss/RemainingTasks.jsx [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$componentss$2f$TotalTasksCard$2e$jsx__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/componentss/TotalTasksCard.jsx [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$componentss$2f$TasksListCard$2e$jsx__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/componentss/TasksListCard.jsx [client] (ecmascript)");
-(()=>{
-    const e = new Error("Cannot find module '@/componentss/WeeklyGoalCard'");
-    e.code = 'MODULE_NOT_FOUND';
-    throw e;
-})();
-(()=>{
-    const e = new Error("Cannot find module '@/componentss/RemainingTaskCard'");
-    e.code = 'MODULE_NOT_FOUND';
-    throw e;
-})();
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/axios/lib/axios.js [client] (ecmascript)");
 ;
 var _s = __turbopack_refresh__.signature();
-;
-;
 ;
 ;
 ;
@@ -1350,13 +1338,11 @@ const QueueSystem = ()=>{
     const [taskName, setTaskName] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])("");
     const [todayTasks, setTodayTasks] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [totalTasks, setTotalTasks] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(0);
-    const [weeklyGoal, setWeeklyGoal] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(1000);
-    const [completedTasksWeekly, setCompletedTasksWeekly] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(0);
     // Fetch tasks from the server
     const fetchTasks = async ()=>{
         try {
             const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].get(`/api/task`);
-            setTasks(response.data);
+            setTasks(response.data); // Assuming the response data is an array of tasks
         } catch (error) {
             console.error("Error fetching tasks:", error);
         }
@@ -1367,7 +1353,6 @@ const QueueSystem = ()=>{
             const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].get(`/api/task/today`);
             setTodayTasks(response.data.todayTasks);
             setTotalTasks(response.data.totalTasks);
-            setCompletedTasksWeekly(response.data.completedTasksThisWeek); // Set weekly completed tasks
         } catch (error) {
             console.error("Error fetching today's tasks:", error);
         }
@@ -1392,18 +1377,12 @@ const QueueSystem = ()=>{
             }
         }
     };
-    // Calculate the weekly goal percentage
-    const calculatePercentage = ()=>{
-        return Math.min(completedTasksWeekly / weeklyGoal * 100, 100);
-    };
-    // Remaining tasks to reach weekly goal
-    const remainingTasksToGoal = weeklyGoal - completedTasksWeekly;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "p-8 max-w-screen-lg mx-auto bg-white space-y-5 lg:space-y-8",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$componentss$2f$atoms$2f$Title$2e$jsx__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/pages/index.js",
-                lineNumber: 73,
+                lineNumber: 60,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1412,12 +1391,12 @@ const QueueSystem = ()=>{
                     totalTasks: totalTasks
                 }, void 0, false, {
                     fileName: "[project]/pages/index.js",
-                    lineNumber: 76,
+                    lineNumber: 63,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/pages/index.js",
-                lineNumber: 75,
+                lineNumber: 62,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$componentss$2f$CreateTask$2e$jsx__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -1427,7 +1406,7 @@ const QueueSystem = ()=>{
                 setTasks: setTasks
             }, void 0, false, {
                 fileName: "[project]/pages/index.js",
-                lineNumber: 79,
+                lineNumber: 66,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1437,23 +1416,23 @@ const QueueSystem = ()=>{
                     completeTask: completeTask
                 }, void 0, false, {
                     fileName: "[project]/pages/index.js",
-                    lineNumber: 88,
+                    lineNumber: 75,
                     columnNumber: 11
                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                     className: "text-gray-500",
                     children: "No tasks"
                 }, void 0, false, {
                     fileName: "[project]/pages/index.js",
-                    lineNumber: 90,
+                    lineNumber: 77,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/pages/index.js",
-                lineNumber: 86,
+                lineNumber: 73,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "grid grid-cols-1 lg:grid-cols-3 gap-6",
+                className: "grid grid-cols-1 lg:grid-cols-2 gap-6",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "flex justify-center lg:justify-start",
@@ -1461,63 +1440,36 @@ const QueueSystem = ()=>{
                             tasks: todayTasks
                         }, void 0, false, {
                             fileName: "[project]/pages/index.js",
-                            lineNumber: 97,
+                            lineNumber: 84,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/pages/index.js",
-                        lineNumber: 96,
+                        lineNumber: 83,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$componentss$2f$RemainingTasks$2e$jsx__$5b$client$5d$__$28$ecmascript$29$__["default"], {
                         tasks: tasks
                     }, void 0, false, {
                         fileName: "[project]/pages/index.js",
-                        lineNumber: 100,
+                        lineNumber: 87,
                         columnNumber: 9
                     }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "flex justify-center lg:justify-start",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(WeeklyGoalCard, {
-                            percentage: calculatePercentage()
-                        }, void 0, false, {
-                            fileName: "[project]/pages/index.js",
-                            lineNumber: 103,
-                            columnNumber: 11
-                        }, this)
-                    }, void 0, false, {
-                        fileName: "[project]/pages/index.js",
-                        lineNumber: 102,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "flex justify-center lg:justify-start",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(RemainingTaskCard, {
-                            remainingTasks: remainingTasksToGoal
-                        }, void 0, false, {
-                            fileName: "[project]/pages/index.js",
-                            lineNumber: 107,
-                            columnNumber: 11
-                        }, this)
-                    }, void 0, false, {
-                        fileName: "[project]/pages/index.js",
-                        lineNumber: 106,
-                        columnNumber: 9
-                    }, this)
+                    " "
                 ]
             }, void 0, true, {
                 fileName: "[project]/pages/index.js",
-                lineNumber: 94,
+                lineNumber: 81,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/pages/index.js",
-        lineNumber: 72,
+        lineNumber: 59,
         columnNumber: 5
     }, this);
 };
-_s(QueueSystem, "IjtqnPtceodMlaDSPoY+HbDaAsc=");
+_s(QueueSystem, "1msNSMSHNOOa2gBxF73CIOCjjko=");
 _c = QueueSystem;
 const __TURBOPACK__default__export__ = QueueSystem;
 var _c;

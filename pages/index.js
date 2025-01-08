@@ -13,8 +13,6 @@ const QueueSystem = () => {
   const [taskName, setTaskName] = useState("");
   const [todayTasks, setTodayTasks] = useState([]);
   const [totalTasks, setTotalTasks] = useState(0);
-  const [weeklyGoal, setWeeklyGoal] = useState(1000); // Default weekly goal of 1000
-  const [completedTasksWeekly, setCompletedTasksWeekly] = useState(0); // Track completed tasks this week
 
   // Fetch tasks from the server
   const fetchTasks = async () => {
@@ -88,6 +86,8 @@ const QueueSystem = () => {
         {/* Remaining Tasks */}
         <RemainingTasks tasks={tasks} />{" "}
       </div>
+
+      {/* Pass the tasks to RemainingTasks component */}
     </div>
   );
 };
