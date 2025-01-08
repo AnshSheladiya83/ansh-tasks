@@ -19,7 +19,9 @@ export default async function handler(req, res) {
         if (!task) return res.status(404).json({ message: "Task not found" });
         res.status(200).json(task);
       } catch (error) {
-        res.status(500).json({ message: "Failed to fetch task" });
+        res
+          .status(500)
+          .json({ message: error.message || "Failed to fetch task" });
       }
       break;
 
@@ -32,7 +34,9 @@ export default async function handler(req, res) {
         if (!task) return res.status(404).json({ message: "Task not found" });
         res.status(200).json(task);
       } catch (error) {
-        res.status(400).json({ message: "Failed to update task" });
+        res
+          .status(400)
+          .json({ message: error.message || "Failed to update task" });
       }
       break;
 
