@@ -24,9 +24,17 @@ export default async function handler(req, res) {
 
     case "POST":
       try {
-        const task = new Task(req.body);
-        await task.save();
-        res.status(201).json(task);
+        // Before creating the task, we ensure the taskNumber is assigned
+        const lastTask = await Task.findOne().sort({ taskNumber: -1 }); // Get the task with the highest taskNumber
+        const taskNumber = lastTask ? lastTask.taskNumber + 1 : 1; // Increment taskNumber or start with 1
+
+        const task = new Task({
+          ...req.body,
+          taskNumber, // Assign the task number here
+        });
+
+        await task.save(); // Save the new task
+        res.status(201).json(task); // Return the created task with the assigned task number
       } catch (error) {
         console.log(error);
         res
