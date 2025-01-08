@@ -3,7 +3,7 @@ import axios from "axios";
 
 // Load base URL from environment variable
 const API_BASE_URL =
-  process.env.REACT_APP_API_BASE_URL || "http://localhost:3001";
+  process.env.REACT_APP_API_BASE_URL || "https://ansh-tasks.netlify.app";
 
 const QueueSystem = () => {
   const [tasks, setTasks] = useState([]);
@@ -72,7 +72,7 @@ const QueueSystem = () => {
           Add Task
         </button>
       </div>
-      
+
       {/* Current Task */}
       <div className="mb-6">
         {tasks.length > 0 ? (
