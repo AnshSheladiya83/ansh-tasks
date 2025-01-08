@@ -1,49 +1,53 @@
+// QueueSystem.tsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
-// Load base URL from environment variable
-const API_BASE_URL =
-  process.env.REACT_APP_API_BASE_URL || "https://ansh-tasks.netlify.app";
+import Title from "../componentss/atoms/Title";
+import CurrentTask from "@/componentss/CurrentTask";
+import CreateTask from "@/componentss/CreateTask";
+import RemainingTasks from "@/componentss/RemainingTasks";
+import TotalTasksCard from "@/componentss/TotalTasksCard";
+import TasksListCard from "@/componentss/TasksListCard";
 
 const QueueSystem = () => {
   const [tasks, setTasks] = useState([]);
   const [taskName, setTaskName] = useState("");
+  const [todayTasks, setTodayTasks] = useState([]);
+  const [totalTasks, setTotalTasks] = useState(0);
+  const [weeklyGoal, setWeeklyGoal] = useState(1000); // Default weekly goal of 1000
+  const [completedTasksWeekly, setCompletedTasksWeekly] = useState(0); // Track completed tasks this week
 
   // Fetch tasks from the server
   const fetchTasks = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/api/task`);
+      const response = await axios.get(`/api/task`);
       setTasks(response.data); // Assuming the response data is an array of tasks
     } catch (error) {
       console.error("Error fetching tasks:", error);
     }
   };
 
-  useEffect(() => {
-    fetchTasks();
-  }, []);
-
-  // Add a new task
-  const addTask = async () => {
-    if (taskName.trim()) {
-      try {
-        const response = await axios.post(`${API_BASE_URL}/api/task`, {
-          name: taskName,
-        });
-        setTasks([...tasks, response.data]); // Add the new task to the local state
-        setTaskName("");
-      } catch (error) {
-        console.error("Error adding task:", error);
-      }
+  // Fetch today's tasks and total count
+  const fetchTodayTasks = async () => {
+    try {
+      const response = await axios.get(`/api/task/today`);
+      setTodayTasks(response.data.todayTasks);
+      setTotalTasks(response.data.totalTasks);
+    } catch (error) {
+      console.error("Error fetching today's tasks:", error);
     }
   };
+
+  useEffect(() => {
+    fetchTasks();
+    fetchTodayTasks(); // Fetch today's tasks and count
+  }, []);
 
   // Mark the current task as completed
   const completeTask = async () => {
     if (tasks.length > 0) {
       const [currentTask, ...remainingTasks] = tasks;
       try {
-        await axios.put(`${API_BASE_URL}/api/task/${currentTask._id}`, {
+        await axios.put(`/api/task/${currentTask._id}`, {
           completed: true,
         });
         setTasks(remainingTasks); // Remove the completed task locally
@@ -54,59 +58,36 @@ const QueueSystem = () => {
   };
 
   return (
-    <div className="p-6 max-w-md mx-auto bg-gray-100 rounded-lg shadow-lg">
-      <h1 className="text-2xl font-bold mb-4 text-center">Task Queue</h1>
-      {/* Task Creation */}
-      <div className="mb-4">
-        <input
-          type="text"
-          placeholder="Enter task name"
-          value={taskName}
-          onChange={(e) => setTaskName(e.target.value)}
-          className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
-        <button
-          onClick={addTask}
-          className="w-full mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-        >
-          Add Task
-        </button>
+    <div className="p-8 max-w-screen-lg mx-auto bg-white space-y-5 lg:space-y-8">
+      <Title />
+      {/* Today's Total Tasks Card */}
+      <div className="flex justify-center lg:justify-start">
+        <TotalTasksCard totalTasks={totalTasks} />
       </div>
-
+      {/* Task Creation */}
+      <CreateTask
+        taskName={taskName}
+        setTaskName={setTaskName}
+        tasks={tasks}
+        setTasks={setTasks}
+      />
       {/* Current Task */}
       <div className="mb-6">
         {tasks.length > 0 ? (
-          <div className="p-4 bg-white rounded-lg shadow-md">
-            <h2 className="text-lg font-semibold">Current Task:</h2>
-            <p className="text-blue-700 font-medium">{tasks[0].name}</p>
-            <button
-              onClick={completeTask}
-              className="mt-4 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
-            >
-              Mark as Completed
-            </button>
-          </div>
+          <CurrentTask task={tasks[0]} completeTask={completeTask} />
         ) : (
-          <p className="text-gray-500">No tasks in the queue.</p>
+          <p className="text-gray-500">No tasks</p>
         )}
       </div>
-      {/* Remaining Tasks */}
-      {/* <div>
-        <h2 className="text-lg font-semibold mb-2">Remaining Tasks:</h2>
-        <ul className="space-y-2">
-          {tasks.slice(1).map((task, index) => (
-            <li
-              key={task._id || index}
-              className="p-2 bg-gray-200 rounded-lg text-gray-700"
-            >
-              {task.name}
-            </li>
-          ))}
-          {tasks.length <= 1 && (
-            <p className="text-gray-500">No remaining tasks.</p>
-          )}
-        </ul>
-      </div> */}
+      {/* Responsive Layout: For large screens (desktop) use grid or flex */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Today's Tasks List Card */}
+        <div className="flex justify-center lg:justify-start">
+          <TasksListCard tasks={todayTasks} />
+        </div>
+        {/* Remaining Tasks */}
+        <RemainingTasks tasks={tasks} />{" "}
+      </div>
     </div>
   );
 };
