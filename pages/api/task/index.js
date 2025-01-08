@@ -26,7 +26,8 @@ export default async function handler(req, res) {
       try {
         // Before creating the task, we ensure the taskNumber is assigned
         const lastTask = await Task.findOne().sort({ taskNumber: -1 }); // Get the task with the highest taskNumber
-        const taskNumber = lastTask ? lastTask.taskNumber + 1 : 1; // Increment taskNumber or start with 1
+        const taskNumber =
+          lastTask && lastTask.taskNumber ? lastTask.taskNumber + 1 : 1; // Increment taskNumber or start with 1
 
         const task = new Task({
           ...req.body,
