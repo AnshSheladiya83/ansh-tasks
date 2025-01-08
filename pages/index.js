@@ -91,7 +91,7 @@ const QueueSystem = () => {
         )}
       </div>
       {/* Remaining Tasks */}
-      <div>
+      {/* <div>
         <h2 className="text-lg font-semibold mb-2">Remaining Tasks:</h2>
         <ul className="space-y-2">
           {tasks.slice(1).map((task, index) => (
@@ -106,7 +106,7 @@ const QueueSystem = () => {
             <p className="text-gray-500">No remaining tasks.</p>
           )}
         </ul>
-      </div>
+      </div> */}
     </div>
   );
 };
