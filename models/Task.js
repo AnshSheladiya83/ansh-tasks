@@ -6,8 +6,8 @@ const TaskSchema = new mongoose.Schema(
     name: { type: String, required: true },
     completed: { type: Boolean, default: false },
     taskNumber: { type: Number, required: true, unique: true }, // Task number field
+    created_at:{ type: String},
   },
-  { timestamps: true }
 );
 
 // Ensure taskNumber increments sequentially
